@@ -7,12 +7,12 @@ public class HexProperties
 {
     public readonly int xCoordinate;
     public readonly int yCoordinate;
-    public readonly Color color;
+    public readonly Vector3 Position;
 
-    public HexProperties(int x, int y, Color c)
+    public HexProperties(int x, int y, Vector3 p)
     {
         xCoordinate = x;
         yCoordinate = y;
-        color = c;
+        Position = p;
     }
 }

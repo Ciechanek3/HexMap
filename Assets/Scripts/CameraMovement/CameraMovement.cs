@@ -19,8 +19,14 @@ public class CameraMovement : MonoBehaviour
     private float maxX;
     private float maxZ;
 
+    private float initialX;
+    private float initialZ;
+
     private void Start()
     {
+        initialX = transform.position.x;
+        initialZ = transform.position.z;
+
         maxX = hexGridGenerator.GridLength;
         maxZ = hexGridGenerator.GridHeight;
     }
@@ -34,6 +40,12 @@ public class CameraMovement : MonoBehaviour
             if (!BelowMaximumValues()) return;
 
             transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
+        }
+
+        if(hexGridGenerator.XGridLayerSize + initialX < transform.position.x)
+        {
+            initialX += hexGridGenerator.XGridLayerSize;
+            hexGridGenerator.GetLayer(1, 0);
         }
 
     }

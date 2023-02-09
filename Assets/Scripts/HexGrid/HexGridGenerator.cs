@@ -20,35 +20,105 @@ public class HexGridGenerator : MonoBehaviour
     [SerializeField]
     private int zGridLayer;
 
+    public float XGridLayerSize => xGridLayer * xCellSize;
+    public float ZGridLayerSize => zGridLayer * xCellSize;
+    
+
     public const float HEX_OFFSET = .5f;
 
     private List<Hex> _hexesToCreate = new List<Hex>();
+    private Hex[,] _activeLayer = new Hex[20, 20];
 
     public float GridLength => xGridSize * xCellSize;
     public float GridHeight => zGridSize * zCellSize;
 
+    private List<HexLayer> _hexLayers = new List<HexLayer>();
+
+    private class HexLayer
+    {
+        public Hex[,] ActiveHexes;
+
+        public readonly int xSize;
+        public readonly int zSize;
+        public readonly int xIndex;
+        public readonly int zIndex;
+        public readonly int HexPropertiesIndex;
+        
+        public HexLayer(int x, int z, int xI, int zI, int cI)
+        {
+            xSize = x;
+            zSize = z;
+            ActiveHexes = new Hex[xSize, zSize];
+            xIndex = xI;
+            zIndex = zI;
+            HexPropertiesIndex = cI;
+        }
+    }
+
     private void Awake()
     {
+        HexLayer startingLayer = new HexLayer(xGridLayer, zGridLayer, 0, 0, 0);
+        _hexLayers.Add(startingLayer);
+
         CreateListOfElements();
-        for (int i = 0; i < xGridSize; i++)
+        CreateElements(startingLayer, true);
+    }
+
+    public void GetLayer(int xOffset, int zOffset)
+    {
+        for (int i = 0; i < _hexLayers.Count; i++)
         {
-            for (int j = 0; j < zGridSize; j++)
+            if (_hexLayers[i].xIndex == xOffset && _hexLayers[i].zIndex == zOffset)
             {
-                Hex hexToCreate = GetElementToCreate();
-                Hex instantiatedHex = Instantiate(hexToCreate, GetPosition(j, i), Quaternion.identity);
-                instantiatedHex.SetupProperties(i, j);
+                Debug.Log("lol2");
+                GetElementsFromLayer(_hexLayers[i]);
+                return;
+            }
+        }
+        CreateElements(new HexLayer(xGridLayer, zGridLayer, xOffset, zOffset, _hexLayers.Count));
+    }
+
+    private void GetElementsFromLayer(HexLayer hexLayer)
+    {
+        for (int i = 0; i < hexLayer.xSize; i++)
+        {
+            for (int j = 0; j < hexLayer.zSize; j++)
+            {
+                Hex hexToCreate = hexLayer.ActiveHexes[i,j];
+                hexToCreate.ChangeProperties(hexLayer.HexPropertiesIndex);
             }
         }
     }
 
+    private void CreateElements(HexLayer currentLayer, bool initial = false)
+    {
+        for (int i = 0; i < xGridLayer; i++)
+        {
+            for (int j = 0; j < zGridLayer; j++)
+            {
+                Hex hexToCreate = GetElementToCreate();
+                int xOffset = currentLayer.xIndex * currentLayer.xSize;
+                int zOffset = currentLayer.zIndex * currentLayer.zSize;
+                Vector3 hexPosition = GetPosition(j + xOffset, i + zOffset);
+                hexToCreate.SetupProperties(i, j, hexPosition);
+                if (initial)
+                {
+                    Hex instantiatedHex = Instantiate(hexToCreate, GetPosition(i, j), Quaternion.identity);
+                    instantiatedHex.SetupColor();
+                    currentLayer.ActiveHexes[i, j] = instantiatedHex;
+                }
+                else
+                {
+                    _activeLayer[i,j].ChangeProperties(currentLayer.HexPropertiesIndex);
+                }
+            }
+        }
+        _activeLayer = currentLayer.ActiveHexes;
+    }
+
     private Hex GetElementToCreate()
     {
-        if (_hexesToCreate.Count == 0)
-        {
-            CreateListOfElements();
-        }
         Hex hex = _hexesToCreate[Random.Range(0, _hexesToCreate.Count)];
-        _hexesToCreate.Remove(hex);
         return hex;
     }
 

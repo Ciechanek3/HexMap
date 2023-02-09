@@ -7,10 +7,25 @@ public class Hex : MonoBehaviour
     [SerializeField]
     private Renderer _renderer;
 
-    public HexProperties _hexProperties;
+    public HexProperties HexProperties;
+    public Color color;
 
-    public void SetupProperties(int x, int y)
+    private List<HexProperties> _hexPropertiesList = new List<HexProperties>();
+    public void SetupProperties(int x, int y, Vector3 p)
     {
-        _hexProperties = new HexProperties(x, y, _renderer.materials[0].color);
+        HexProperties = new HexProperties(x, y, p);
+        _hexPropertiesList.Add(HexProperties);
+    }
+
+    public void SetupColor()
+    {
+        color = _renderer.materials[0].color;
+    }
+
+    public void ChangeProperties(int index)
+    {
+        Debug.Log(index);
+        HexProperties = _hexPropertiesList[index];
+        transform.position = HexProperties.Position;
     }
 }

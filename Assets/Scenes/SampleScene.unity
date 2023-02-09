@@ -568,9 +568,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexes:
-  - hex: {fileID: 1063833564035045398, guid: ca2fb52be8c738d41adb035feaff36c0, type: 3}
+  - hex: {fileID: 128931513548929897, guid: ca2fb52be8c738d41adb035feaff36c0, type: 3}
     spawnRatio: 60
-  - hex: {fileID: 1938146414509227522, guid: ae38cafeee5ebd743be5a24edcac5dfa, type: 3}
+  - hex: {fileID: 3241536472711262092, guid: ae38cafeee5ebd743be5a24edcac5dfa, type: 3}
     spawnRatio: 25
   - hex: {fileID: 5885211726992610744, guid: d778fa477a2305f4c936922b6f3d8c5f, type: 3}
     spawnRatio: 10
@@ -578,8 +578,10 @@ MonoBehaviour:
     spawnRatio: 5
   xCellSize: 3
   zCellSize: 2.66
-  xGridSize: 10
-  zGridSize: 10
+  xGridSize: 1000
+  zGridSize: 1000
+  xGridLayer: 20
+  zGridLayer: 20
 --- !u!4 &2111963881
 Transform:
   m_ObjectHideFlags: 0
