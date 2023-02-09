@@ -481,6 +481,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2024716695}
+  - component: {fileID: 2024716696}
+  - component: {fileID: 2024716697}
   m_Layer: 0
   m_Name: CameraMovement
   m_TagString: Untagged
@@ -504,6 +506,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2024716696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024716694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e9a77056c3be04695dc1c42ba29077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 2024716697}
+  speedMultiplier: 0.03
+--- !u!114 &2024716697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024716694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41385a38edc0634b9e3118af92ab416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  look: {x: 0, y: 0}
+  isRightMouseButtonClicked: 0
+  isLeftMouseButtonClicked: 0
 --- !u!1 &2111963879
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexes:
-  - hex: {fileID: 7622277349327750124, guid: ca2fb52be8c738d41adb035feaff36c0, type: 3}
+  - hex: {fileID: 1063833564035045398, guid: ca2fb52be8c738d41adb035feaff36c0, type: 3}
     spawnRatio: 60
   - hex: {fileID: 1938146414509227522, guid: ae38cafeee5ebd743be5a24edcac5dfa, type: 3}
     spawnRatio: 25

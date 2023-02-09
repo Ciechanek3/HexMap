@@ -5,29 +5,37 @@ using UnityEngine.InputSystem;
 
 public class CameraMovement : MonoBehaviour
 {
-	public Vector2 look;
-	public float isRightMouseButtonClicked;
-	public float isLeftMouseButtonClicked;
-
-	private MovementInputAction _movementInputAction;
-
-    private void Awake()
-    {
-		_movementInputAction = new MovementInputAction();
-		_movementInputAction.Enable();
-		look = _movementInputAction.movement.Look.ReadValue<Vector2>();
-
-    }
+    [SerializeField]
+    private InputReader inputReader;
+    [SerializeField]
+    private float speedMultiplier;
+    [SerializeField]
+    private int minX;
+    [SerializeField]
+    private int minZ;
 
     private void Update()
     {
-		isRightMouseButtonClicked = _movementInputAction.movement.RightMouseButtonClicked.ReadValue<float>();
-		isLeftMouseButtonClicked = _movementInputAction.movement.RightMouseButtonClicked.ReadValue<float>();
-
-		if (isRightMouseButtonClicked != 0)
+        if (inputReader.IsRightMouseButtonClicked)
         {
-			look = _movementInputAction.movement.Look.ReadValue<Vector2>();
-			Debug.Log("hi");
+            if (transform.position.x <= minX && inputReader.look.x < 0 && transform.position.z <= minZ && inputReader.look.y < 0)
+            {
+                return;
+            }
+
+            if (transform.position.x <= minX && inputReader.look.x < 0)
+            {
+                transform.position += new Vector3(0, 0, inputReader.look.y * speedMultiplier);
+                return;
+            }
+
+            if (transform.position.z <= minZ && inputReader.look.y < 0)
+            {
+                transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, 0);
+                return;
+            }
+
+            transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
         }
     }
 }
