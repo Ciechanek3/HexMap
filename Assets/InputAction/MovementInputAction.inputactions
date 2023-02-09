@@ -1,0 +1,54 @@
+{
+    "name": "MovementInputAction",
+    "maps": [
+        {
+            "name": "movement",
+            "id": "24c42d8e-9197-4534-bbc6-49794c6e31a0",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "3059c5a2-e0fd-4af4-b1f6-98ab380c7281",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightMouseButtonClicked",
+                    "type": "Value",
+                    "id": "e329b39a-5aa4-423e-851d-2f80dbb0cfe5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "65b2f4ea-f710-4706-83fc-1e5f921ae40e",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4681fdd9-a667-4279-a36a-7e2d806d468d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightMouseButtonClicked",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

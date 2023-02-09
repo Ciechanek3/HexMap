@@ -17,7 +17,6 @@ public class HexGridGenerator : MonoBehaviour
     private void Awake()
     {
         CreateListOfElements();
-        Debug.Log(_hexesToCreate.Count);
         for (int i = 0; i < xGridSize; i++)
         {
             for (int j = 0; j < zGridSize; j++)

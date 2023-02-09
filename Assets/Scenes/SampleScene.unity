@@ -400,14 +400,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -10.587677, y: 2.8882961, z: -1.6304893}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2024716695}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!850595691 &969014223
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -472,6 +472,38 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+--- !u!1 &2024716694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2024716695}
+  m_Layer: 0
+  m_Name: CameraMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2024716695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024716694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.587677, y: 11.751704, z: 18.87049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 963194228}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2111963879
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,9 +533,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bdede29c871774ea5b1558f11a7d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hexes:
+  - hex: {fileID: 7622277349327750124, guid: ca2fb52be8c738d41adb035feaff36c0, type: 3}
+    spawnRatio: 60
+  - hex: {fileID: 1938146414509227522, guid: ae38cafeee5ebd743be5a24edcac5dfa, type: 3}
+    spawnRatio: 25
+  - hex: {fileID: 5885211726992610744, guid: d778fa477a2305f4c936922b6f3d8c5f, type: 3}
+    spawnRatio: 10
+  - hex: {fileID: 4811473494945798706, guid: 07098a78b531fc24c87b1450f5d58f6a, type: 3}
+    spawnRatio: 5
   xCellSize: 3
   yCellSize: 2.66
-  hex: {fileID: 1828003049569821561, guid: ae38cafeee5ebd743be5a24edcac5dfa, type: 3}
   xGridSize: 10
   zGridSize: 10
 --- !u!4 &2111963881
