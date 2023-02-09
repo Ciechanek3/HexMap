@@ -8,34 +8,104 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private InputReader inputReader;
     [SerializeField]
+    private HexGridGenerator hexGridGenerator;
+    [SerializeField]
     private float speedMultiplier;
     [SerializeField]
     private int minX;
     [SerializeField]
     private int minZ;
 
+    private float maxX;
+    private float maxZ;
+
+    private void Start()
+    {
+        maxX = hexGridGenerator.GridLength;
+        maxZ = hexGridGenerator.GridHeight;
+        Debug.Log(maxZ);
+    }
+
     private void Update()
     {
         if (inputReader.IsRightMouseButtonClicked)
         {
-            if (transform.position.x <= minX && inputReader.look.x < 0 && transform.position.z <= minZ && inputReader.look.y < 0)
-            {
-                return;
-            }
+            if (!AboveMinimumValues()) return;
+            if (!BelowMaximumValues()) return;
 
-            if (transform.position.x <= minX && inputReader.look.x < 0)
-            {
-                transform.position += new Vector3(0, 0, inputReader.look.y * speedMultiplier);
-                return;
-            }
-
-            if (transform.position.z <= minZ && inputReader.look.y < 0)
-            {
-                transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, 0);
-                return;
-            }
+            if (!InsideCombinedValues()) return;
 
             transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
         }
+
+    }
+    private bool AboveMinimumValues()
+    {
+        if (transform.position.x <= minX && inputReader.look.x <= 0 && transform.position.z <= minZ && inputReader.look.y <= 0)
+        {
+            return false;
+        }
+
+        if (transform.position.x <= minX && inputReader.look.x <= 0)
+        {
+            transform.position += new Vector3(0, 0, inputReader.look.y * speedMultiplier);
+            return false;
+        }
+
+        if (transform.position.z <= minZ && inputReader.look.y <= 0)
+        {
+            transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, 0);
+            return false;
+        }
+        return true;
+    }
+
+    private bool BelowMaximumValues()
+    {
+        if (transform.position.x >= maxX && inputReader.look.x >= 0 && transform.position.z >= maxZ && inputReader.look.y >= 0)
+        {
+            return false;
+        }
+
+        if (transform.position.x >= maxX && inputReader.look.x >= 0)
+        {
+            transform.position += new Vector3(0, 0, inputReader.look.y * speedMultiplier);
+            return false;
+        }
+
+        if (transform.position.z >= maxZ && inputReader.look.y >= 0)
+        {
+            transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, 0);
+            return false;
+        }
+        return true;
+    }
+
+    private bool InsideCombinedValues()
+    {
+        if (transform.position.x <= minX && inputReader.look.x <= 0 && transform.position.z >= maxZ && inputReader.look.y > 0)
+        {
+            Debug.Log("lol");
+            return false;
+        }
+
+        if (transform.position.x >= minX && inputReader.look.x <= 0 && transform.position.z <= maxZ && inputReader.look.y < 0)
+        {
+            return false;
+        }
+
+        if (transform.position.z <= minZ && inputReader.look.y <= 0 && transform.position.x >= maxZ && inputReader.look.x > 0)
+        {
+            return false;
+        }
+
+        if (transform.position.z >= minX && inputReader.look.y <= 0 && transform.position.x <= maxZ && inputReader.look.x < 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
+
+  

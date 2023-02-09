@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class HexGridGenerator : MonoBehaviour
 {
-    public List<HexWithSpawnRatio> hexes;
+    [SerializeField]
+    private List<HexWithSpawnRatio> hexes;
     [Header("Sizes")]
-    public float xCellSize;
-    public float yCellSize;
-    public int xGridSize;
-    public int zGridSize; 
+    [SerializeField]
+    private float xCellSize;
+    [SerializeField]
+    private float zCellSize;
+    [SerializeField]
+    private int xGridSize;
+    [SerializeField]
+    private int zGridSize;
+
     public const float HEX_OFFSET = .5f;
 
     private List<Hex> _hexesToCreate = new List<Hex>();
+
+    public float GridLength => xGridSize * xCellSize;
+    public float GridHeight => zGridSize * zCellSize;
 
     private void Awake()
     {
@@ -51,6 +60,6 @@ public class HexGridGenerator : MonoBehaviour
 
     public Vector3 GetPosition(int x, int z)
     {
-        return new Vector3(x * xCellSize, 0, z * yCellSize) + ((z % 2) == 1 ? new Vector3(xCellSize, 0, 0) * HEX_OFFSET : Vector3.zero);
+        return new Vector3(x * xCellSize, 0, z * zCellSize) + ((z % 2) == 1 ? new Vector3(xCellSize, 0, 0) * HEX_OFFSET : Vector3.zero);
     }
 }

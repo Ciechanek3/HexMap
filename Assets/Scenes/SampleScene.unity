@@ -519,7 +519,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 2024716697}
+  hexGridGenerator: {fileID: 2111963880}
   speedMultiplier: 0.03
+  minX: 25
+  minZ: 9
 --- !u!114 &2024716697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +577,7 @@ MonoBehaviour:
   - hex: {fileID: 4811473494945798706, guid: 07098a78b531fc24c87b1450f5d58f6a, type: 3}
     spawnRatio: 5
   xCellSize: 3
-  yCellSize: 2.66
+  zCellSize: 2.66
   xGridSize: 10
   zGridSize: 10
 --- !u!4 &2111963881
