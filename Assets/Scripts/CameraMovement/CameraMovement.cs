@@ -30,10 +30,9 @@ public class CameraMovement : MonoBehaviour
     {
         if (inputReader.IsRightMouseButtonClicked)
         {
+            if (!InsideCombinedValues()) return;
             if (!AboveMinimumValues()) return;
             if (!BelowMaximumValues()) return;
-
-            if (!InsideCombinedValues()) return;
 
             transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
         }
@@ -85,11 +84,10 @@ public class CameraMovement : MonoBehaviour
     {
         if (transform.position.x <= minX && inputReader.look.x <= 0 && transform.position.z >= maxZ && inputReader.look.y > 0)
         {
-            Debug.Log("lol");
             return false;
         }
 
-        if (transform.position.x >= minX && inputReader.look.x <= 0 && transform.position.z <= maxZ && inputReader.look.y < 0)
+        if (transform.position.x >= maxX && inputReader.look.x <= 0 && transform.position.z <= minZ && inputReader.look.y < 0)
         {
             return false;
         }
@@ -99,7 +97,7 @@ public class CameraMovement : MonoBehaviour
             return false;
         }
 
-        if (transform.position.z >= minX && inputReader.look.y <= 0 && transform.position.x <= maxZ && inputReader.look.x < 0)
+        if (transform.position.z >= maxX && inputReader.look.y <= 0 && transform.position.x <= minZ && inputReader.look.x < 0)
         {
             return false;
         }
