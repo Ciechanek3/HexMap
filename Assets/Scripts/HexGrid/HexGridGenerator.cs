@@ -110,8 +110,6 @@ public class HexGridGenerator : MonoBehaviour
             for (int j = 0; j < hexLayer.zSize; j++)
             {
                 Hex hexToCreate = hexLayer.ActiveHexes[i,j];
-                Debug.Log(hexToCreate);
-                Debug.Log(hexLayer.HexPropertiesIndex);
                 hexToCreate.ChangeProperties(hexLayer.HexPropertiesIndex);
             }
         }

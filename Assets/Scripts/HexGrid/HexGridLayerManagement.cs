@@ -13,7 +13,7 @@ public class HexGridLayerManagement : MonoBehaviour
     private int xOffset;
     private int zOffset;
 
-    private void Start()
+    public void SetupInitialValues(Transform transform)
     {
         xOffset = 0;
         zOffset = 0;
@@ -22,21 +22,37 @@ public class HexGridLayerManagement : MonoBehaviour
         initialZ = transform.position.z;
     }
 
-    public void ChangeLayer(Transform transform)
+    public void ChangeLayerHorizontally(Transform transform)
     {
         if (hexGridGenerator.XGridLayerSize + initialX < transform.position.x)
         {
             xOffset++;
             initialX += hexGridGenerator.XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, 0);
+            hexGridGenerator.GetLayer(xOffset, zOffset);
         }
 
         if (initialX - hexGridGenerator.XGridLayerSize / 2 > transform.position.x)
         {
-            Debug.Log("1");
             xOffset--;
             initialX -= hexGridGenerator.XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, 0);
+            hexGridGenerator.GetLayer(xOffset, zOffset);
+        }
+    }
+
+    public void ChangeLayerVertically(Transform transform)
+    {
+        if (hexGridGenerator.ZGridLayerSize + initialZ < transform.position.z)
+        {
+            zOffset++;
+            initialZ += hexGridGenerator.ZGridLayerSize;
+            hexGridGenerator.GetLayer(xOffset, zOffset);
+        }
+
+        if (initialZ - hexGridGenerator.ZGridLayerSize / 2 > transform.position.z)
+        {
+            zOffset--;
+            initialZ -= hexGridGenerator.ZGridLayerSize;
+            hexGridGenerator.GetLayer(xOffset, zOffset);
         }
     }
 }

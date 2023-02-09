@@ -25,6 +25,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
+        hexGridLayerManagement.SetupInitialValues(transform);
         maxX = hexGridGenerator.GridLength;
         maxZ = hexGridGenerator.GridHeight;
     }
@@ -40,8 +41,8 @@ public class CameraMovement : MonoBehaviour
             transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
         }
 
-        hexGridLayerManagement.ChangeLayer(transform);
-
+        hexGridLayerManagement.ChangeLayerHorizontally(transform);
+        hexGridLayerManagement.ChangeLayerVertically(transform);
     }
     private bool AboveMinimumValues()
     {
