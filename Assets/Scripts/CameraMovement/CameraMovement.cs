@@ -23,7 +23,6 @@ public class CameraMovement : MonoBehaviour
     {
         maxX = hexGridGenerator.GridLength;
         maxZ = hexGridGenerator.GridHeight;
-        Debug.Log(maxZ);
     }
 
     private void Update()
