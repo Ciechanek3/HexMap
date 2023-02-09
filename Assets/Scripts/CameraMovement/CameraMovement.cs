@@ -10,6 +10,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private HexGridGenerator hexGridGenerator;
     [SerializeField]
+    private HexGridLayerManagement hexGridLayerManagement;
+    [SerializeField]
     private float speedMultiplier;
     [SerializeField]
     private int minX;
@@ -19,20 +21,10 @@ public class CameraMovement : MonoBehaviour
     private float maxX;
     private float maxZ;
 
-    private float initialX;
-    private float initialZ;
-
-    private int xOffset;
-    private int zOffset;
+    
 
     private void Start()
     {
-        xOffset = 0;
-        zOffset = 0;
-
-        initialX = transform.position.x;
-        initialZ = transform.position.z;
-
         maxX = hexGridGenerator.GridLength;
         maxZ = hexGridGenerator.GridHeight;
     }
@@ -48,20 +40,7 @@ public class CameraMovement : MonoBehaviour
             transform.position += new Vector3(inputReader.look.x * speedMultiplier, 0, inputReader.look.y * speedMultiplier);
         }
 
-        if(hexGridGenerator.XGridLayerSize + initialX < transform.position.x)
-        {
-            xOffset++;
-            initialX += hexGridGenerator.XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, 0);
-        }
-
-        if(initialX - hexGridGenerator.XGridLayerSize / 2 > transform.position.x )
-        {
-            Debug.Log("1");
-            xOffset--;
-            initialX -= hexGridGenerator.XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, 0);
-        }
+        hexGridLayerManagement.ChangeLayer(transform);
 
     }
     private bool AboveMinimumValues()
