@@ -33,6 +33,8 @@ public class HexGridGenerator : MonoBehaviour
     public float GridHeight => zGridSize * zCellSize;
 
     private List<HexLayer> _hexLayers = new List<HexLayer>();
+    private List<Coordinates> _availableCoordinates = new List<Coordinates>();
+    private List<Coordinates> _startingCoordinates = new List<Coordinates>();
 
     private class HexLayer
     {
@@ -55,8 +57,29 @@ public class HexGridGenerator : MonoBehaviour
         }
     }
 
+    private class Coordinates
+    {
+        public readonly int X;
+        public readonly int Z;
+
+        public Coordinates(int x, int z)
+        {
+            X = x;
+            Z = z;
+        }
+    }
+
     private void Awake()
     {
+        for (int i = 0; i < xGridLayer; i++)
+        {
+            for (int j = 0; j < zGridLayer; j++)
+            {
+                Coordinates coordinates = new Coordinates(i, j);
+                _availableCoordinates.Add(coordinates);
+            }
+        }
+        _startingCoordinates.AddRange(_availableCoordinates);
         HexLayer startingLayer = new HexLayer(xGridLayer, zGridLayer, 0, 0, 0);
         _hexLayers.Add(startingLayer);
 
@@ -75,7 +98,9 @@ public class HexGridGenerator : MonoBehaviour
                 return;
             }
         }
-        CreateElements(new HexLayer(xGridLayer, zGridLayer, xOffset, zOffset, _hexLayers.Count));
+        HexLayer newLayer = new HexLayer(xGridLayer, zGridLayer, xOffset, zOffset, _hexLayers.Count);
+        _hexLayers.Add(newLayer);
+        CreateElements(newLayer);
     }
 
     private void GetElementsFromLayer(HexLayer hexLayer)
@@ -85,6 +110,8 @@ public class HexGridGenerator : MonoBehaviour
             for (int j = 0; j < hexLayer.zSize; j++)
             {
                 Hex hexToCreate = hexLayer.ActiveHexes[i,j];
+                Debug.Log(hexToCreate);
+                Debug.Log(hexLayer.HexPropertiesIndex);
                 hexToCreate.ChangeProperties(hexLayer.HexPropertiesIndex);
             }
         }
@@ -96,24 +123,25 @@ public class HexGridGenerator : MonoBehaviour
         {
             for (int j = 0; j < zGridLayer; j++)
             {
-                Hex hexToCreate = GetElementToCreate();
                 int xOffset = currentLayer.xIndex * currentLayer.xSize;
                 int zOffset = currentLayer.zIndex * currentLayer.zSize;
-                Vector3 hexPosition = GetPosition(j + xOffset, i + zOffset);
-                hexToCreate.SetupProperties(i, j, hexPosition);
+                Coordinates randomCoordinate = GetRandomCoordinate();
+                Vector3 hexPosition = GetPosition(randomCoordinate.X + xOffset, randomCoordinate.Z + zOffset);
                 if (initial)
                 {
-                    Hex instantiatedHex = Instantiate(hexToCreate, GetPosition(i, j), Quaternion.identity);
-                    instantiatedHex.SetupColor();
-                    currentLayer.ActiveHexes[i, j] = instantiatedHex;
+                    Hex hexToCreate = GetElementToCreate();
+                    _activeLayer[i, j] = Instantiate(hexToCreate, GetPosition(i, j), Quaternion.identity);
+                    _activeLayer[i, j].SetupProperties(i, j, hexPosition);
+                    _activeLayer[i, j].SetupColor();
                 }
                 else
                 {
+                    _activeLayer[i, j].SetupProperties(i + currentLayer.xIndex, j + currentLayer.zIndex, hexPosition);
                     _activeLayer[i,j].ChangeProperties(currentLayer.HexPropertiesIndex);
                 }
+                currentLayer.ActiveHexes = _activeLayer;
             }
         }
-        _activeLayer = currentLayer.ActiveHexes;
     }
 
     private Hex GetElementToCreate()
@@ -133,6 +161,16 @@ public class HexGridGenerator : MonoBehaviour
         }
     }
 
+    private Coordinates GetRandomCoordinate()
+    {
+        if (_availableCoordinates.Count == 0)
+        {
+            _availableCoordinates.AddRange(_startingCoordinates);
+        }
+        Coordinates coordinate = _availableCoordinates[Random.Range(0, _availableCoordinates.Count)];
+        _availableCoordinates.Remove(coordinate);
+        return coordinate;
+    }
     public Vector3 GetPosition(int x, int z)
     {
         return new Vector3(x * xCellSize, 0, z * zCellSize) + ((z % 2) == 1 ? new Vector3(xCellSize, 0, 0) * HEX_OFFSET : Vector3.zero);

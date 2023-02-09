@@ -22,9 +22,9 @@ public class Hex : MonoBehaviour
         color = _renderer.materials[0].color;
     }
 
+
     public void ChangeProperties(int index)
     {
-        Debug.Log(index);
         HexProperties = _hexPropertiesList[index];
         transform.position = HexProperties.Position;
     }
