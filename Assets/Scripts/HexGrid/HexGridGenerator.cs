@@ -15,6 +15,10 @@ public class HexGridGenerator : MonoBehaviour
     private int xGridSize;
     [SerializeField]
     private int zGridSize;
+    [SerializeField]
+    private int xGridLayer;
+    [SerializeField]
+    private int zGridLayer;
 
     public const float HEX_OFFSET = .5f;
 
@@ -23,27 +27,8 @@ public class HexGridGenerator : MonoBehaviour
     public float GridLength => xGridSize * xCellSize;
     public float GridHeight => zGridSize * zCellSize;
 
-    private List<int> _availableXCoordinates = new List<int>();
-    private List<int> _availableZCoordinates = new List<int>();
-
     private void Awake()
     {
-        for (int i = 0; i < xGridSize; i++)
-        {
-            for (int j = 0; j < zGridSize; j++)
-            {
-                _availableXCoordinates.Add(i);
-            }
-        }
-
-        for (int i = 0; i < zGridSize; i++)
-        {
-            for (int j = 0; j < xGridSize; j++)
-            {
-                _availableZCoordinates.Add(i);
-            }
-        }
-
         CreateListOfElements();
         for (int i = 0; i < xGridSize; i++)
         {
@@ -51,7 +36,7 @@ public class HexGridGenerator : MonoBehaviour
             {
                 Hex hexToCreate = GetElementToCreate();
                 Hex instantiatedHex = Instantiate(hexToCreate, GetPosition(j, i), Quaternion.identity);
-                instantiatedHex.SetupProperties(GetRandomIntFromList(_availableXCoordinates), GetRandomIntFromList(_availableZCoordinates));
+                instantiatedHex.SetupProperties(i, j);
             }
         }
     }
@@ -65,13 +50,6 @@ public class HexGridGenerator : MonoBehaviour
         Hex hex = _hexesToCreate[Random.Range(0, _hexesToCreate.Count)];
         _hexesToCreate.Remove(hex);
         return hex;
-    }
-
-    private int GetRandomIntFromList(List<int> list)
-    {
-        int a = list[Random.Range(0, list.Count)];
-        list.Remove(a);
-        return a;
     }
 
     private void CreateListOfElements()
