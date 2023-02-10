@@ -7,16 +7,54 @@ public class HexGridLayerManagement : MonoBehaviour
     [SerializeField]
     private HexGridGenerator hexGridGenerator;
 
+    public int xGridLayer;
+    public int zGridLayer;
+
+    public List<HexLayer> HexLayers = new List<HexLayer>();
+
     private float initialX;
     private float initialZ;
 
     private int xOffset;
     private int zOffset;
 
+    public float XGridLayerSize => xGridLayer * hexGridGenerator.xCellSize;
+    public float ZGridLayerSize => zGridLayer * hexGridGenerator.xCellSize;
+
+    private void Start()
+    {
+        int layerIndex = 0;
+        CreateStartingLayer(layerIndex, 0, 0);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 1, 0);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 0, 1);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 1, 1);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 0, 2);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 2, 0);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 2, 1);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 1, 2);
+        layerIndex++;
+        CreateStartingLayer(layerIndex, 2, 2);
+
+    }
+
+    private void CreateStartingLayer(int layerIndex, int xOffset, int zOffset)
+    {
+        HexLayer startingLayer = new HexLayer(xGridLayer, zGridLayer, xOffset, zOffset, layerIndex);
+        HexLayers.Add(startingLayer);
+        hexGridGenerator.CreateElements(startingLayer, true);
+    }
+
     public void SetupInitialValues(Transform transform)
     {
-        xOffset = 0;
-        zOffset = 0;
+        xOffset = 1;
+        zOffset = 1;
 
         initialX = transform.position.x;
         initialZ = transform.position.z;
@@ -24,34 +62,34 @@ public class HexGridLayerManagement : MonoBehaviour
 
     public void ChangeLayerHorizontally(Transform transform)
     {
-        if (hexGridGenerator.XGridLayerSize + initialX < transform.position.x)
+        if (XGridLayerSize + initialX < transform.position.x)
         {
             xOffset++;
-            initialX += hexGridGenerator.XGridLayerSize;
+            initialX += XGridLayerSize;
             hexGridGenerator.GetLayer(xOffset, zOffset);
         }
 
-        if (initialX - hexGridGenerator.XGridLayerSize / 2 > transform.position.x)
+        if (initialX - XGridLayerSize / 2 > transform.position.x)
         {
             xOffset--;
-            initialX -= hexGridGenerator.XGridLayerSize;
+            initialX -= XGridLayerSize;
             hexGridGenerator.GetLayer(xOffset, zOffset);
         }
     }
 
     public void ChangeLayerVertically(Transform transform)
     {
-        if (hexGridGenerator.ZGridLayerSize + initialZ < transform.position.z)
+        if (ZGridLayerSize + initialZ < transform.position.z)
         {
             zOffset++;
-            initialZ += hexGridGenerator.ZGridLayerSize;
+            initialZ += ZGridLayerSize;
             hexGridGenerator.GetLayer(xOffset, zOffset);
         }
 
-        if (initialZ - hexGridGenerator.ZGridLayerSize / 2 > transform.position.z)
+        if (initialZ - ZGridLayerSize / 2 > transform.position.z)
         {
             zOffset--;
-            initialZ -= hexGridGenerator.ZGridLayerSize;
+            initialZ -= ZGridLayerSize;
             hexGridGenerator.GetLayer(xOffset, zOffset);
         }
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hex : MonoBehaviour
@@ -7,15 +5,7 @@ public class Hex : MonoBehaviour
     [SerializeField]
     private Renderer _renderer;
 
-    public HexProperties HexProperties;
     public Color color;
-
-    private List<HexProperties> _hexPropertiesList = new List<HexProperties>();
-    public void SetupProperties(int x, int y, Vector3 p)
-    {
-        HexProperties = new HexProperties(x, y, p);
-        _hexPropertiesList.Add(HexProperties);
-    }
 
     public void SetupColor()
     {
@@ -23,9 +13,8 @@ public class Hex : MonoBehaviour
     }
 
 
-    public void ChangeProperties(int index)
+    public void ChangeProperties(Vector3 position)
     {
-        HexProperties = _hexPropertiesList[index];
-        transform.position = HexProperties.Position;
+        this.transform.position = position;
     }
 }
