@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 1299089982}
   - component: {fileID: 1299089981}
   - component: {fileID: 1299089983}
+  - component: {fileID: 1299089984}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -918,6 +919,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1299089984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299089979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c1bbc9a61c9b049baad69dfed76ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xCoordinateText: {fileID: 2048913552}
+  zCoordinateText: {fileID: 484465956}
+  colorImage: {fileID: 176101761}
 --- !u!1 &2024716694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1176,7 @@ MonoBehaviour:
   - hex: {fileID: 4811473494945798706, guid: 07098a78b531fc24c87b1450f5d58f6a, type: 3}
     spawnRatio: 5
   hexGridLayerManagement: {fileID: 2111963882}
-  hexDescriptionUI: {fileID: 0}
+  hexDescriptionUI: {fileID: 1299089984}
   xCellSize: 3
   zCellSize: 2.66
   xGridSize: 1000
@@ -1194,5 +1210,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexGridGenerator: {fileID: 2111963880}
   cameraMovement: {fileID: 2024716696}
-  xGridLayer: 20
-  zGridLayer: 20
+  xGridLayer: 10
+  zGridLayer: 10
