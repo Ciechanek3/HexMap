@@ -57,7 +57,7 @@ public class HexGridLayerManagement : MonoBehaviour
         float xCameraMovement = cameraMovement.inputReader.look.x;
         if (xCameraMovement > 0.5f)
         {
-            if (initialX + XGridLayerSize / 2 < transform.position.x)
+            if (initialX + XGridLayerSize / 3 < transform.position.x)
             {
                 xOffset++;
                 initialX += XGridLayerSize;
@@ -67,7 +67,7 @@ public class HexGridLayerManagement : MonoBehaviour
 
         if (xCameraMovement < -0.5f)
         {
-            if (initialX - XGridLayerSize / 2  > transform.position.x)
+            if (initialX - XGridLayerSize / 3  > transform.position.x)
             {
                 xOffset--;
                 initialX -= XGridLayerSize;
@@ -81,7 +81,7 @@ public class HexGridLayerManagement : MonoBehaviour
         float zCameraMovement = cameraMovement.inputReader.look.y;
         if (zCameraMovement > 0.5f)
         {
-            if (ZGridLayerSize / 2 + initialZ < transform.position.z)
+            if (ZGridLayerSize / 3 + initialZ < transform.position.z)
             {
                 zOffset++;
                 initialZ += ZGridLayerSize;
@@ -91,7 +91,7 @@ public class HexGridLayerManagement : MonoBehaviour
 
         if (zCameraMovement < -0.5f)
         {
-            if (initialZ - ZGridLayerSize / 2 > transform.position.z)
+            if (initialZ - ZGridLayerSize / 3 > transform.position.z)
             {
                 zOffset--;
                 initialZ -= ZGridLayerSize;
