@@ -984,8 +984,8 @@ MonoBehaviour:
   hexGridGenerator: {fileID: 2111963880}
   hexGridLayerManagement: {fileID: 2111963882}
   speedMultiplier: 0.03
-  minX: 25
-  minZ: 9
+  minX: 34
+  minZ: 15
   cameraHeight: 20
 --- !u!114 &2024716697
 MonoBehaviour:
@@ -1211,5 +1211,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexGridGenerator: {fileID: 2111963880}
   cameraMovement: {fileID: 2024716696}
-  xGridLayer: 50
-  zGridLayer: 50
+  xGridLayer: 30
+  zGridLayer: 30
