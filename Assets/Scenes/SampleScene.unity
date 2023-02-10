@@ -611,5 +611,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexGridGenerator: {fileID: 2111963880}
-  xGridLayer: 10
-  zGridLayer: 10
+  cameraMovement: {fileID: 2024716696}
+  xGridLayer: 20
+  zGridLayer: 20

@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField]
-    private InputReader inputReader;
+    public InputReader inputReader;
+
     [SerializeField]
     private HexGridGenerator hexGridGenerator;
     [SerializeField]

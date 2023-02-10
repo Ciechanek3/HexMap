@@ -6,6 +6,8 @@ public class HexGridLayerManagement : MonoBehaviour
 {
     [SerializeField]
     private HexGridGenerator hexGridGenerator;
+    [SerializeField]
+    private CameraMovement cameraMovement;
 
     public int xGridLayer;
     public int zGridLayer;
@@ -53,8 +55,8 @@ public class HexGridLayerManagement : MonoBehaviour
 
     public void SetupInitialValues(Transform transform)
     {
-        xOffset = 1;
-        zOffset = 1;
+        xOffset = 0;
+        zOffset = 0;
 
         initialX = transform.position.x;
         initialZ = transform.position.z;
@@ -62,35 +64,49 @@ public class HexGridLayerManagement : MonoBehaviour
 
     public void ChangeLayerHorizontally(Transform transform)
     {
-        if (XGridLayerSize + initialX < transform.position.x)
+        float xCameraMovement = cameraMovement.inputReader.look.x;
+        if (xCameraMovement > 0.5f)
         {
-            xOffset++;
-            initialX += XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, zOffset);
+            if (initialX + XGridLayerSize / 6 < transform.position.x)
+            {
+                xOffset++;
+                initialX += XGridLayerSize;
+                hexGridGenerator.GetLayer(xOffset, zOffset);
+            }
         }
 
-        if (initialX - XGridLayerSize / 2 > transform.position.x)
+        if (xCameraMovement < -0.5f)
         {
-            xOffset--;
-            initialX -= XGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, zOffset);
+            if (initialX - XGridLayerSize / 6 > transform.position.x)
+            {
+                xOffset--;
+                initialX -= XGridLayerSize;
+                hexGridGenerator.GetLayer(xOffset, zOffset);
+            }
         }
     }
 
     public void ChangeLayerVertically(Transform transform)
     {
-        if (ZGridLayerSize + initialZ < transform.position.z)
+        float zCameraMovement = cameraMovement.inputReader.look.y;
+        if (zCameraMovement > 0.5f)
         {
-            zOffset++;
-            initialZ += ZGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, zOffset);
+            if (ZGridLayerSize / 6 + initialZ < transform.position.z)
+            {
+                zOffset++;
+                initialZ += ZGridLayerSize;
+                hexGridGenerator.GetLayer(xOffset, zOffset);
+            }
         }
 
-        if (initialZ - ZGridLayerSize / 2 > transform.position.z)
+        if (zCameraMovement < -0.5f)
         {
-            zOffset--;
-            initialZ -= ZGridLayerSize;
-            hexGridGenerator.GetLayer(xOffset, zOffset);
-        }
+            if (initialZ - ZGridLayerSize / 6 > transform.position.z)
+            {
+                zOffset--;
+                initialZ -= ZGridLayerSize;
+                hexGridGenerator.GetLayer(xOffset, zOffset);
+            }
+        }   
     }
 }
