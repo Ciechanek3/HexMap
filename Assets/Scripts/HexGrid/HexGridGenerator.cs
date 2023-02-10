@@ -110,7 +110,7 @@ public class HexGridGenerator : MonoBehaviour
                     Hex hexToCreate = GetElementToCreate();
                     TryAddUIToInteractive(hexToCreate);
                     activeLayer[i, j] = Instantiate(hexToCreate, hexPosition, Quaternion.identity);
-                    currentLayer.SetupProperties(i, j, i + currentLayer.xIndex, j + currentLayer.zIndex, hexPosition);
+                    currentLayer.SetupProperties(i, j, i + xOffset, j + zOffset, hexPosition);
                     activeLayer[i, j].SetupColor();
                 }
                 else
