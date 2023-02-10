@@ -21,13 +21,15 @@ public class HexGridGenerator : MonoBehaviour
     public const float HEX_OFFSET = .5f;
 
     private List<Hex> _hexesToCreate = new List<Hex>();
-    private Queue<Hex[,]> _activeLayers = new Queue<Hex[,]>();
+    private List<Hex[,]> _activeLayers = new List<Hex[,]>();
 
     public float GridLength => xGridSize * xCellSize;
     public float GridHeight => zGridSize * zCellSize;
 
     private List<Coordinates> _availableCoordinates = new List<Coordinates>();
     private List<Coordinates> _startingCoordinates = new List<Coordinates>();
+
+    private int listIndex;
 
     private class Coordinates
     {
@@ -43,6 +45,7 @@ public class HexGridGenerator : MonoBehaviour
 
     private void Awake()
     {
+        listIndex = 0;
         for (int i = 0; i < hexGridLayerManagement.xGridLayer; i++)
         {
             for (int j = 0; j < hexGridLayerManagement.zGridLayer; j++)
@@ -84,12 +87,17 @@ public class HexGridGenerator : MonoBehaviour
     
     public void CreateElements(HexLayer currentLayer, bool initial = false)
     {
+        Hex[,] activeLayer;
         if (initial)
         {
             Hex[,] newLayer = new Hex[hexGridLayerManagement.xGridLayer, hexGridLayerManagement.zGridLayer];
-            _activeLayers.Enqueue(newLayer);
+            activeLayer = newLayer;
         }
-        Hex[,] activeLayer = _activeLayers.Dequeue();
+        else
+        {
+            activeLayer = _activeLayers[3];
+        }
+        
         for (int i = 0; i < hexGridLayerManagement.xGridLayer; i++)
         {
             for (int j = 0; j < hexGridLayerManagement.zGridLayer; j++)
@@ -114,7 +122,7 @@ public class HexGridGenerator : MonoBehaviour
             }
         }
         currentLayer.ActiveHexes = activeLayer;
-        _activeLayers.Enqueue(currentLayer.ActiveHexes);
+        _activeLayers.Add(currentLayer.ActiveHexes);
     }
 
     private Hex GetElementToCreate()
