@@ -29,6 +29,16 @@ public class HexLayer
         HexProperties[xIndex, zIndex] = new HexProperties(x, y, p);
     }
 
+    public void SetProperties()
+    {
+        for (int i = 0; i < xSize; i++)
+        {
+            for (int j = 0; j < zSize; j++)
+            {
+                ActiveHexes[i, j].HexProperties = HexProperties[i, j];
+            }
+        }
+    }
     public void ChangePropertiesOfHex(int i, int j)
     {
         ActiveHexes[i, j].ChangeProperties(HexProperties[i, j].Position);

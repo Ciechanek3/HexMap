@@ -8,6 +8,8 @@ public class HexGridGenerator : MonoBehaviour
     private List<HexWithSpawnRatio> hexes;
     [SerializeField]
     private HexGridLayerManagement hexGridLayerManagement;
+    [SerializeField]
+    private HexDescriptionUI hexDescriptionUI;
     [Header("Sizes")]
 
     public float xCellSize;
@@ -106,10 +108,10 @@ public class HexGridGenerator : MonoBehaviour
                 if (initial)
                 {
                     Hex hexToCreate = GetElementToCreate();
+                    TryAddUIToInteractive(hexToCreate);
                     activeLayer[i, j] = Instantiate(hexToCreate, hexPosition, Quaternion.identity);
                     currentLayer.SetupProperties(i, j, i + currentLayer.xIndex, j + currentLayer.zIndex, hexPosition);
                     activeLayer[i, j].SetupColor();
-                    
                 }
                 else
                 {
@@ -119,9 +121,26 @@ public class HexGridGenerator : MonoBehaviour
             }
         }
         currentLayer.ActiveHexes = activeLayer;
+        currentLayer.SetProperties();
+
+
         _activeLayers.Enqueue(currentLayer.ActiveHexes);
     }
 
+    private Hex TryAddUIToInteractive(Hex hex)
+    {
+        HexInteractive hexInteractive = hex as HexInteractive;
+        if (hexInteractive != null)
+        {
+            hexInteractive.hexDescriptionUI = hexDescriptionUI;
+        }
+        else
+        {
+            return hex;
+        }
+
+        return hexInteractive;
+    }
     private Hex GetElementToCreate()
     {
         if(_hexesToCreate.Count == 0)
