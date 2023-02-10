@@ -17,6 +17,8 @@ public class CameraMovement : MonoBehaviour
     private int minX;
     [SerializeField]
     private int minZ;
+    [SerializeField]
+    private int cameraHeight;
 
     private float maxX;
     private float maxZ;
@@ -25,6 +27,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
+        Vector3 startingPosition = hexGridGenerator.GetPosition(hexGridLayerManagement.xGridLayer / 2, hexGridLayerManagement.zGridLayer / 2);
+        transform.position = new Vector3(startingPosition.x, cameraHeight, startingPosition.z);
         hexGridLayerManagement.SetupInitialValues(transform);
         maxX = hexGridGenerator.GridLength;
         maxZ = hexGridGenerator.GridHeight;

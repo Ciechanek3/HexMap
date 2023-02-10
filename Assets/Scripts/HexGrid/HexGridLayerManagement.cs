@@ -26,24 +26,14 @@ public class HexGridLayerManagement : MonoBehaviour
     private void Start()
     {
         int layerIndex = 0;
-        CreateStartingLayer(layerIndex, 0, 0);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 1, 0);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 0, 1);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 1, 1);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 0, 2);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 2, 0);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 2, 1);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 1, 2);
-        layerIndex++;
-        CreateStartingLayer(layerIndex, 2, 2);
-
+        for (int i = 0; i <= 2; i++)
+        {
+            for (int j = 0; j <= 2; j++)
+            {
+                CreateStartingLayer(layerIndex, i, j);
+                layerIndex++;
+            }
+        }
     }
 
     private void CreateStartingLayer(int layerIndex, int xOffset, int zOffset)
@@ -67,7 +57,7 @@ public class HexGridLayerManagement : MonoBehaviour
         float xCameraMovement = cameraMovement.inputReader.look.x;
         if (xCameraMovement > 0.5f)
         {
-            if (initialX + XGridLayerSize / 6 < transform.position.x)
+            if (initialX + XGridLayerSize / 2 < transform.position.x)
             {
                 xOffset++;
                 initialX += XGridLayerSize;
@@ -77,7 +67,7 @@ public class HexGridLayerManagement : MonoBehaviour
 
         if (xCameraMovement < -0.5f)
         {
-            if (initialX - XGridLayerSize / 6 > transform.position.x)
+            if (initialX - XGridLayerSize / 2  > transform.position.x)
             {
                 xOffset--;
                 initialX -= XGridLayerSize;
@@ -91,7 +81,7 @@ public class HexGridLayerManagement : MonoBehaviour
         float zCameraMovement = cameraMovement.inputReader.look.y;
         if (zCameraMovement > 0.5f)
         {
-            if (ZGridLayerSize / 6 + initialZ < transform.position.z)
+            if (ZGridLayerSize / 2 + initialZ < transform.position.z)
             {
                 zOffset++;
                 initialZ += ZGridLayerSize;
@@ -101,7 +91,7 @@ public class HexGridLayerManagement : MonoBehaviour
 
         if (zCameraMovement < -0.5f)
         {
-            if (initialZ - ZGridLayerSize / 6 > transform.position.z)
+            if (initialZ - ZGridLayerSize / 2 > transform.position.z)
             {
                 zOffset--;
                 initialZ -= ZGridLayerSize;
